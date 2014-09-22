@@ -66,3 +66,6 @@ Temporary Items
 .directory
 
 config.js
+*.min.css
+*.min.js
+public
