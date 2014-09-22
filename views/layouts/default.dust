@@ -1,11 +1,12 @@
 <!DOCTYPE html>
 <html>
 	<head>
-		
+		<link rel="stylesheet" type="text/css" href="/css/combined.min.css">
 	</head>
 	<body>
 		<div id="wrapper">
 			{+body/}
 		</div>
+		<script type="text/javascript" src="/js/combined.js"></script>
 	</body>
 </html>

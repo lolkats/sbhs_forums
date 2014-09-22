@@ -19,7 +19,6 @@ module.exports = function(grunt){
 		    },
 		    build : {
 		    	files : {
-		    		'public/js/bootstrap.min.js': 'bower_components/bootstrap/js/*',
 		    	},
 		    }
 		},
@@ -31,6 +30,15 @@ module.exports = function(grunt){
 					src: '**/*',
 					dest: 'public/fonts',
 					expand: true
+				},
+				{
+					src: 'bower_components/bootstrap/dist/js/bootstrap.min.js',
+					dest:'public/js/bootstrap.min.js'
+
+				},
+				{
+					src: 'bower_components/jquery/dist/jquery.min.js',
+					dest:'public/js/ajquery.min.js'					
 				}
 				],
 				options: {
@@ -39,8 +47,15 @@ module.exports = function(grunt){
 					}
 				}
 			}
+		},
+		concat: {
+			basic_and_extras: {
+				files: {
+					"public/js/combined.js":["public/js/*.min.js"]
+				}
+			},
 		}
 	});
 	require('load-grunt-tasks')(grunt);
-	grunt.registerTask('default',['less','copy','uglify']);
+	grunt.registerTask('default',['less','copy','uglify','concat']);
 };

@@ -21,6 +21,9 @@ if(app.get('env') == 'production'){
     app.set('view engine', 'js');
     app.engine('js', dust.js({cache: true}));
 };
+
+app.use(express.static(__dirname + '/public'));
+
 var router = express.Router();
 router.Router = express.Router;
 //Require Routers
