@@ -19,6 +19,7 @@ module.exports = function(grunt){
 		    },
 		    build : {
 		    	files : {
+		    		"public/js/forums.min.js": "src/js/*"
 		    	},
 		    }
 		},
@@ -39,6 +40,10 @@ module.exports = function(grunt){
 				{
 					src: 'bower_components/jquery/dist/jquery.min.js',
 					dest:'public/js/ajquery.min.js'					
+				},
+				{
+					src:'bower_components/angular/angular.min.js',
+					dest:'public/js/angular.min.js'
 				}
 				],
 				options: {

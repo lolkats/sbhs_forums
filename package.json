@@ -31,6 +31,7 @@
     "load-grunt-tasks": "^0.6.0",
     "mongoose": "^3.8.16",
     "mongoose-timestamps": "0.0.1",
+    "node-uuid": "^1.4.1",
     "passport": "^0.2.1",
     "passport-sbhs": "0.0.3"
   },

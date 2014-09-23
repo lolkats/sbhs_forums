@@ -24,6 +24,12 @@ if(app.get('env') == 'production'){
 
 app.use(express.static(__dirname + '/public'));
 
+app.use(function(req,res,next){
+    if(req.user){
+        res.locals.user = req.user;
+        next();
+    }
+});
 var router = express.Router();
 router.Router = express.Router;
 //Require Routers
