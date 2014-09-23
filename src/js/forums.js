@@ -1,10 +1,26 @@
 // The name of this file is weird for grunt.
-var forums = angular.module('forums',[],['$interpolateProvider',function($interpolateProvider){
+var app = angular.module('app',[],['$interpolateProvider',function($interpolateProvider){
     // set custom delimiters for angular templates
     $interpolateProvider.startSymbol('[[');
     $interpolateProvider.endSymbol(']]');
 }]);
 
-forums.controller('GroupController',['$scope',function($scope){
+app.service('sharedProperties', function () {
+    var hashtable = {};
+    return {
+        setValue: function (key, value) {
+            hashtable[key] = value;
+        },
+        getValue: function (key) {
+            return hashtable[key];
+        }
+    }
+});
+
+app.controller('GroupController',['$scope',function($scope){
 	$scope.groups = ["we","are","doing","groups","later"];
+}]);
+
+app.controller('ThreadController',['$scope',function($scope){
+	$scope.x="Test";
 }]);

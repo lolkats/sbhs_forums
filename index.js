@@ -42,6 +42,7 @@ var sbhs = new SBHSStrategy({
     profile.accessToken = accessToken;
     profile.refreshToken = refreshToken;
     models.User.authenticate(profile,function(err,user){
+        models.Group.upsertYearGroup(user.yearGroup);
         done(null,user.username);
     });
 });

@@ -17,4 +17,4 @@ This is a software package for our school. It is a useless forum, pretty much.
 - Then load http://localhost:3000/
 
 ##Current State of Project##
-Many things don't really work. Its just a skeleton for now. Login via SBHS working soon.
+Many things don't really work. Its just a skeleton for now. Login via SBHS works now.

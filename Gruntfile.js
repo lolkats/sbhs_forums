@@ -19,7 +19,7 @@ module.exports = function(grunt){
 		    },
 		    build : {
 		    	files : {
-		    		"public/js/forums.min.js": "src/js/*"
+		    		"public/js/app.min.js": "src/js/*"
 		    	},
 		    }
 		},
@@ -34,16 +34,16 @@ module.exports = function(grunt){
 				},
 				{
 					src: 'bower_components/bootstrap/dist/js/bootstrap.min.js',
-					dest:'public/js/bootstrap.min.js'
+					dest:'public/js/bootstrap.min.lib.js'
 
 				},
 				{
 					src: 'bower_components/jquery/dist/jquery.min.js',
-					dest:'public/js/ajquery.min.js'					
+					dest:'public/js/ajquery.min.lib.js'					
 				},
 				{
 					src:'bower_components/angular/angular.min.js',
-					dest:'public/js/angular.min.js'
+					dest:'public/js/angular.min.lib.js'
 				}
 				],
 				options: {
@@ -56,7 +56,7 @@ module.exports = function(grunt){
 		concat: {
 			basic_and_extras: {
 				files: {
-					"public/js/combined.js":["public/js/*.min.js"]
+					"public/js/assets.js":["public/js/*.min.lib.js"]
 				}
 			},
 		}

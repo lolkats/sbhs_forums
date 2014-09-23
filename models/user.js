@@ -2,7 +2,7 @@ module.exports = function(db,models){
 	var User = db.Schema({
 		username:{type:String, required:true,unique:true},
 		password:String, //Only Required for Admins
-		role:{type:String, required:true}, //Student or Staff,or Admin
+		role:{type:String, required:true}, //Student Staff StudentAdmin Admin
 		givenName:{type:String, required:true},
 		surname:{type:String, required:true},
 		yearGroup:{type:String,required:true}, //Staff, year(student),Admin
