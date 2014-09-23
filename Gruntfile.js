@@ -44,12 +44,19 @@ module.exports = function(grunt){
 				{
 					src:'bower_components/angular/angular.min.js',
 					dest:'public/js/angular.min.lib.js'
+				},
+				{
+					cwd:'src/fonts',
+					src:"**/*",
+					dest:'public/fonts',
+					expand:true
 				}
 				],
 				options: {
 					process: function (content, srcpath) {
 						return content.replace('<{!timestamp}>', new Date());
-					}
+					},
+					processContentExclude: ['**/*.{png,gif,jpg,ico,psd,ttf,woff}']
 				}
 			}
 		},
