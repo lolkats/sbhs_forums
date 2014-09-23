@@ -5,6 +5,10 @@ var config = require('./config'),
     fs = require('fs'),
     db = require('./lib/db')(config.db),
     models = db.models,
+    Uuid = require('node-uuid'),
+    passport = require('passport'),
+    SBHSStrategy = require('passport-sbhs'),
+    cookieParser = require('cookie-parser'),
     path = require('path'),
     dust = require('adaro');
 
@@ -22,13 +26,46 @@ if(app.get('env') == 'production'){
     app.engine('js', dust.js({cache: true}));
 };
 
+passport.serializeUser(function(user,done){done(null,user);});
+passport.deserializeUser(function(user,done){
+    models.User.findOne({username:user},function(err,user){
+        done(null,user);
+    });
+});
+
+var sbhs = new SBHSStrategy({
+    clientID:config.sbhs.clientID,
+    clientSecret:config.sbhs.clientSecret,
+    state:Uuid.v4(),
+    callbackURL: 'http://'+config.sbhs.host+'/login/sbhs/callback'
+},function(accessToken,refreshToken,profile,done){
+    profile.accessToken = accessToken;
+    profile.refreshToken = refreshToken;
+    models.User.authenticate(profile,function(err,user){
+        done(null,user.username);
+    });
+});
+
+passport.use(sbhs);
 app.use(express.static(__dirname + '/public'));
+app.use(cookieParser());
+app.use(Session(config.session));
+app.use(passport.initialize());
+app.use(passport.session());
+passport.use(sbhs);
 
 app.use(function(req,res,next){
-    if(req.user){
-        res.locals.user = req.user;
-        next();
+    if(req.user && !req.user.firstSignOnAccepted){
+        if(req.url != "/firsttime" && req.url !="/logout"){
+            return res.redirect('/firsttime');
+        }
     }
+    if(req.user){
+        req.user.isStudent = req.user.role=="Student" || undefined;
+        res.locals.user = req.user;
+    }
+    next();
+
 });
 var router = express.Router();
 router.Router = express.Router;
@@ -37,7 +74,7 @@ router.Router = express.Router;
 fs.readdirSync('./routes/').forEach(function(file) {
     fs.stat('./routes/'+file,function(err,stat){
         if(stat.isDirectory()){
-            require("./routes/"+file)(router,models);
+            require("./routes/"+file)(router,models,passport);
         }
     });
 });
@@ -50,6 +87,9 @@ app.use(function(req, res, next) {
     next(err);
 });
 
+app.get("/sessionTest",function(req,res){
+    res.json(req.user);
+})
 /// error handlers
 
 // development error handler

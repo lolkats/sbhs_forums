@@ -1,0 +1,19 @@
+{> "layouts/default"/}
+{<body}
+<div class="container">
+	<h1>Hi There, Pleased to Meet You</h1>
+	<p>Before going on this site, there are a few things that I would like to ask you a few questions. This page will be displayed until you answer the questions.</p>
+
+	<h3>User Details</h3>
+	<p><b>Username:</b> {user.username}</p>
+	<p><b>Given Name:</b> {user.givenName}</p>
+	<p><b>Surname:</b> {user.surname}</p>
+	<p><b>Year Group:</b> {?user.isStudent}Class Of {/user.isStudent}{user.yearGroup}</p>
+
+	<h3>Some Questions</h3>
+	<form action="/login/firsttime" method="POST">
+		<p>Do you accept to our Terms Of Service.</p><input type="checkbox" name="tosaccept" value="true" checked>
+		<p>Do you allow us to collect anonymous data on your behalf. This data is used to make our services better and also give personalised reminders to you.</p> <input type="checkbox" name="anonymousdatacollection" value="true" checked>
+	</form>
+</div>
+{/body}

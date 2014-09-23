@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html>
 	<head>
+		<title>SBHS Forums | {+title/}</title>
 		<link rel="stylesheet" type="text/css" href="/css/combined.min.css">
 	</head>
 	<body ng-app="forums">
@@ -47,7 +48,7 @@
 							</li>
 						{/user}
 						{^user}
-							<li><a href="/loginsbhs">Login</a></li>
+							<li><a href="/login/sbhs">Login With SBHS</a></li>
 						{/user}
 					</ul>
 				</div><!-- /.navbar-collapse -->
