@@ -25,8 +25,8 @@ module.exports = function(db,models){
 				return cb(null,user);
 			}
 			var user = new self(params);
-			if(user.role=="Staff"){
-				user.yearGroup + "Staff";
+			if(user.role!="Student"){
+				user.yearGroup = user.role;
 			}
 			if(user.role == "Student"){
 				user.yearGroup = new Date().getFullYear() + 12-Number(user.yearGroup);
