@@ -6,6 +6,7 @@ module.exports = function(db,models){
 		shortName:{type: String, required:true,unique:true},
 		description:String,
 		admin: String,
+		privateUsers:Array,
 		pinned:String //Pinned thread
 
 	});

@@ -8,7 +8,8 @@ module.exports = function(db,models){
 		yearGroup:{type:String,required:true}, //Staff, year(student),Admin
 		accessToken:{type:String,required:true},
 		refreshToken:{type:String,required:true},
-		anonymousDataCollection:Boolean,
+		privateGroups:Array,
+		anonymousDataCollection:{type:Boolean,default:false},
 		firstSignOnAccepted:{type:Boolean,default:false}
 	});
 
