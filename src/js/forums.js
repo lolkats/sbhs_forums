@@ -18,7 +18,12 @@ app.service('sharedProperties', function () {
 });
 
 app.controller('GroupController',['$scope',function($scope){
-	$scope.groups = ["we","are","doing","groups","later"];
+    if(window.authenticated){
+        $scope.groups = ["we","are","doing","groups","later"];
+    }
+    else{
+        $scope.groups = ["You need to login in first"];
+    }
 }]);
 
 app.controller('ThreadController',['$scope',function($scope){

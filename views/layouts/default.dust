@@ -58,6 +58,14 @@
 		<div id="wrapper">
 			{+body/}
 		</div>
+		<script type="text/javascript">
+			{?user}
+				window.authenticated=!0;
+			{/user}
+			{^user}
+				window.authenticated=!1;
+			{/user}
+		</script>
 		<script type="text/javascript" src="/js/assets.js"></script>
 		<script type="text/javascript" src="/js/app.min.js"></script>
 	</body>
