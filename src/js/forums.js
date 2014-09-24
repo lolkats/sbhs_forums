@@ -24,3 +24,7 @@ app.controller('GroupController',['$scope',function($scope){
 app.controller('ThreadController',['$scope',function($scope){
 	$scope.x="Test";
 }]);
+
+app.controller('NotFoundController',['$scope',function($scope){
+	$scope.test="Test";
+}]);

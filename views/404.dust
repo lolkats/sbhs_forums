@@ -1,29 +1,7 @@
-<!DOCTYPE html>
-<html>
-	<head>
-		<style type="text/css">
-			@font-face {
-			    font-family: 'Roboto';
-			    src: url(/fonts/roboto-thin.ttf);
-			    font-weight: 100;
-			}
-			.acrostic {
-				text-align: center;
-				font-family: 'Roboto';
-				font-weight: 100;
-				font-size:5vw;
-			}
-			.charcol{
-				color:red;
-			}
-		</style>
-	</head>
-	<body>
-		<br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/>
-		<div class="centered">
-			<div class="acrostic">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;R u lookin <span class="charcol">4</span> sumthin&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</div>
-			<div class="acrostic">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Nobody really kn<span class="charcol">0</span>ws what it is&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</div>
-			<div class="acrostic">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Have fun looking <span class="charcol">4</span> it&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</div>
-		</div>
-	</body>
-</html>
+{>"layouts/default"/}
+{<title}404{/title}
+{<body}
+<div ng-controller="NotFoundController">
+	<img src="/img/404.png" style="width:100%; height:100%;" border="0" />
+</div>
+{/body}

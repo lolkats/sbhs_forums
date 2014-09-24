@@ -3,6 +3,7 @@
 	<head>
 		<title>SBHS Forums | {+title/}</title>
 		<link rel="stylesheet" type="text/css" href="/css/combined.min.css">
+		{+head/}
 	</head>
 	<body ng-app="app">
 		<nav class="navbar navbar-default" role="navigation">
