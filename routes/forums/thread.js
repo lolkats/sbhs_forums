@@ -83,6 +83,53 @@ module.exports = function(app,models){
 			res.status(401).json({error:"accessDenied"});
 		}
 	});
+	app.post('/thread/:id/newpost',function(req,res){
+		if(req.user){
+			req.body.creator = req.user.username;
+			models.Thread.findOne({
+				_id:req.params.id
+			},function(err,thread){
+				if(!thread){
+					return res.status(404).json({error:"notFound"});
+				}
+				if(err){
+					return res.status(500).json({error:"unknownError"});
+				}
+				models.Group.findOne({
+					_id:thread.groupId
+				},function(err,group){
+					if(group.private!='false'){
+						if(group.private=="yearGroup" && req.user.yearGroup==group.yearGroup){
+							thread.createPost(req.body,function(err,post){
+								res.json(post);
+							});
+						}
+						else if(req.user.privateGroups.indexOf(group._id)!=-1){
+							thread.createPost(req.body,function(err,post){
+								res.json(post);
+							});
+						}
+						else if(req.user.role=="Admin"){
+							thread.createPost(req.body,function(err,post){
+								res.json(post);
+							});	
+						}	
+						else{
+							res.status(401).json({error:"accessDenied"});
+						}
+					}
+					else{
+						thread.createPost(req.body,function(err,post){
+							res.json(post);
+						});
+					}
+				});
+			});
+		}
+		else{
+			res.status(401).json({error:"accessDenied"});
+		}
+	});
 
 	
 };

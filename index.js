@@ -50,6 +50,7 @@ var sbhs = new SBHSStrategy({
 passport.use(sbhs);
 app.use(express.static(__dirname + '/public'));
 app.use(cookieParser());
+app.use(BodyParser());
 app.use(Session(config.session));
 app.use(passport.initialize());
 app.use(passport.session());

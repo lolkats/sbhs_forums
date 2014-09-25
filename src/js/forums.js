@@ -18,6 +18,10 @@ var app = angular.module('app',['ngRoute'],['$interpolateProvider','$locationPro
             templateUrl:'partials/group.html',
             controller:'GroupController'
         })
+        .when('/group/:gname/thread/:thread',{
+            templateUrl:'partials/thread.html',
+            controller:"ThreadController"
+        })
         .otherwise({redirectTo:'/404'});
 
 }]);
@@ -71,8 +75,23 @@ app.controller('GroupController',['$scope','$routeParams','$http','$window',func
     };
     $scope.loadThreads();
 }]);
-app.controller('ThreadController',['$scope',function($scope){
-	$scope.x="Test";
+app.controller('ThreadController',['$scope','$routeParams','$http',function($scope,$routeParams,$http){
+	$scope.getPosts = function(){
+        $http.get('/api/forums/thread/'+$routeParams.thread+"/posts").success(function(data){
+            $scope.posts = data;
+        }).error(function(){
+            console.log("Failed to load posts.");
+        });
+    };
+    $scope.loadThread = function(){
+        $http.get('/api/forums/thread/'+$routeParams.thread).success(function(data){
+            $scope.thread = data;
+        }).error(function(){
+            console.log("Failed to load posts.");
+        });
+    };
+    $scope.loadThread();
+    $scope.getPosts();
 }]);
 
 app.controller('NotFoundController',['$scope','$window',function($scope,$window){

@@ -9,6 +9,7 @@ module.exports = function(db,models){
 		accessToken:{type:String,required:true},
 		refreshToken:{type:String,required:true},
 		privateGroups:Array,
+		banned:{type:Boolean,default:false},
 		anonymousDataCollection:{type:Boolean,default:false},
 		firstSignOnAccepted:{type:Boolean,default:false}
 	});
@@ -35,7 +36,25 @@ module.exports = function(db,models){
 			user.save(cb);
 		});
 	};
-
-
+	User.methods.getPublicIdentity = function(){
+		return({
+			username:this.username,
+			role:this.role,
+			givenName:this.givenName,
+			surname:this.surname,
+			yearGroup:this.yearGroup
+		});
+	};
+	User.methods.getPrivateIdentity = function(){
+		return({
+			username:this.username,
+			role:this.role,
+			givenName:this.givenName,
+			surname:this.surname,
+			yearGroup:this.yearGroup,
+			privateGroups:this.privateGroups,
+			banned:this.banned
+		});
+	};
 	models.register('User',User);
 };
