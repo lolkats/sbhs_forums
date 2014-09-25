@@ -2,18 +2,18 @@ module.exports = function(app,models){
 	app.get('/group/listthreadsbygid/:id',function(req,res){
 		models.Group.findOne({_id:req.params.id},function(err,group){
 			if(group){
-				if(user.role == "Admin"){
+				if(req.user.role == "Admin"){
 					group.getThreads(function(err,threads){
 						res.json(threads);
 					});					
 				}
-				else if(group.private!='false' && user.role!= "Admin"){
-					if(group.private=="yearGroup"&&req.user.yearGroup==user.yearGroup){
+				else if(group.private!='false'){
+					if(group.private=="yearGroup"&&req.user.yearGroup==group.yearGroup){
 						group.getThreads(function(err,threads){
 							res.json(threads);
 						});
 					}
-					else if(group.private=="true"&&req.user.privateGroups.indexOf(group._id)!=-1){
+					else if(req.user.privateGroups.indexOf(group._id)!=-1){
 						group.getThreads(function(err,threads){
 							res.json(threads);
 						});
@@ -38,13 +38,13 @@ module.exports = function(app,models){
 		if(req.user){
 			models.Group.findOne({shortName:req.params.sname},function(err,group){
 				if(group){
-					if(user.role == "Admin"){
+					if(req.user.role == "Admin"){
 						group.getThreads(function(err,threads){
 							res.json(threads);
 						});					
 					}
-					else if(group.private!='false' && user.role!= "Admin"){
-						if(group.private=="yearGroup"&&req.user.yearGroup==user.yearGroup){
+					else if(group.private!='false'){
+						if(group.private=="yearGroup"&&req.user.yearGroup==group.yearGroup){
 							group.getThreads(function(err,threads){
 								res.json(threads);
 							});
@@ -55,7 +55,7 @@ module.exports = function(app,models){
 							});
 						}
 						else{
-							res.json({error:"accessDenied"},401);
+							res.status(401).json({error:"accessDenied"});
 						}
 					}
 					else{
@@ -65,14 +65,46 @@ module.exports = function(app,models){
 					}
 				}
 				else{
-					res.json({error:"groupNotExists"},404);
+					res.status(404).json({error:"groupNotExists"});
 				}
 			});
 		}
 		else {
-			res.json({error:"accessDenied"},401);
+			res.status(401).json({error:"accessDenied"});
 		}
 	});
+	app.get('/group/:sname',function(req,res){
+		if(req.user){
+			models.Group.findOne({shortName:req.params.sname},function(err,group){
+				if(group){
+					if(req.user.role == "Admin"){
+						res.json(group);;					
+					}
+					else if(group.private!='false'){
+						if(group.private=="yearGroup"&&req.user.yearGroup==group.yearGroup){
+							res.json(group);
+						}
+						else if(group.private=="true"&&group.privateUsers.indexOf(req.user.username)!=-1){
+							res.json(group);
+						}
+						else{
+							res.status(401).json({error:"accessDenied"});
+						}
+					}
+					else{
+						res.json(group);
+					}
+				}
+				else{
+					res.status(404).json({error:"groupNotExists"});
+				}
+			});
+		}
+		else {
+			res.status(401).json({error:"accessDenied"});
+		}
+	});
+
 	app.get('/groups',function(req,res){
 		if(req.user){
 			models.Group.find({$or:[

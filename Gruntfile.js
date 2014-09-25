@@ -46,6 +46,10 @@ module.exports = function(grunt){
 					dest:'public/js/angular.min.lib.js'
 				},
 				{
+					src:'bower_components/angular-route/angular-route.js',
+					dest:'public/js/angular-route.min.plgn.js'
+				},
+				{
 					cwd:'src/fonts',
 					src:"**/*",
 					dest:'public/fonts',
@@ -55,6 +59,12 @@ module.exports = function(grunt){
 					cwd:'src/img',
 					src:"**/*",
 					dest:'public/img',
+					expand:true
+				},
+				{
+					cwd:'src/partials',
+					src:"**/*",
+					dest:'public/partials',
 					expand:true
 				}
 				],
@@ -69,7 +79,8 @@ module.exports = function(grunt){
 		concat: {
 			basic_and_extras: {
 				files: {
-					"public/js/assets.js":["public/js/*.min.lib.js"]
+					"public/js/assets.js":["public/js/*.min.lib.js"],
+					"public/js/plgn.js":["public/js/*.min.plgn.js"]
 				}
 			},
 		}

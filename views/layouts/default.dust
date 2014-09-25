@@ -1,7 +1,10 @@
 <!DOCTYPE html>
 <html>
 	<head>
-		<title>SBHS Forums | {+title/}</title>
+		<title ng-bind="'SBHS Forums | ' + $rootScope.pageTitle">SBHS Forums | {+title/}</title>
+		<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+		<meta name="description" content="meep">
+		<base href="/">
 		<link rel="stylesheet" type="text/css" href="/css/combined.min.css">
 		{+head/}
 	</head>
@@ -24,11 +27,11 @@
 					<ul class="nav navbar-nav">
 						<li><a href="#">A</a></li>
 						<li><a href="#">B</a></li>
-						<li class="dropdown">
-							<a href="#" class="dropdown-toggle" data-toggle="dropdown">Groups <span class="caret"></span></a>
-							<ul class="dropdown-menu" role="menu" ng-controller="GroupController">
+						<li class="dropdown" ng-controller="GroupLoaderController" ng-click="loadGroups()">
+							<a class="dropdown-toggle" data-toggle="dropdown">Groups <span class="caret"></span></a>
+							<ul class="dropdown-menu" role="menu">
 								<li ng-repeat="group in groups">
-									<a href="/group/[[group]]">[[group.toProperCase()]]</a>
+									<a href="/group/[[group.shortName]]">[[group.name.toProperCase()]]</a>
 								</li>
 							</ul>
 						</li>
@@ -44,19 +47,21 @@
 							<li class="dropdown">
 								<a href="#" class="dropdown-toggle" data-toggle="dropdown">Account <span class="caret"></span></a>
 								<ul class="dropdown-menu" role="menu">
-									<li><a href="/logout">Logout</a></li>
+									<li><a href="/logout" target="_self">Logout</a></li>
 								</ul>
 							</li>
 						{/user}
 						{^user}
-							<li><a href="/login/sbhs">Login With SBHS</a></li>
+							<li><a href="/login/sbhs" target="_self">Login With SBHS</a></li>
 						{/user}
 					</ul>
 				</div><!-- /.navbar-collapse -->
 			</div><!-- /.container-fluid -->
 		</nav>		
-		<div id="wrapper">
+		<div id="wrapper" class="container-fluid">
+			<div ng-view>
 			{+body/}
+			</div>
 		</div>
 		<script type="text/javascript">
 			{?user}
@@ -67,6 +72,7 @@
 			{/user}
 		</script>
 		<script type="text/javascript" src="/js/assets.js"></script>
+		<script type="text/javascript" src="/js/plgn.js"></script>
 		<script type="text/javascript" src="/js/app.min.js"></script>
 	</body>
 </html>

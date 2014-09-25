@@ -83,6 +83,7 @@ app.use("/",router);
 
 /// catch 404 and forwarding to error handler
 app.use(function(req, res, next) {
+    res.status(404);
     res.render('404');
 });
 

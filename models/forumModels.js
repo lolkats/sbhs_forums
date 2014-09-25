@@ -36,24 +36,57 @@ module.exports = function(db,models){
 	Group.methods.createThread = function(params,cb){
 		var thread = new models.Thread({
 			groupId:this._id,
-			creator:params.creator,
+			creator:params.creator||"forumBot",
 			name:params.name
 		});
 		thread.save(cb);
 	};
 	Group.methods.getThreads = function(cb){
-		models.Thread.find({groupId:this._id}).select('_id name open').exec(cb);
+		models.Thread.find({groupId:this._id}).select('_id name open creator').exec(cb);
 	};
+
+
 	var Thread = db.Schema({
 		groupId:{type:String, required:true},
-		creator:{type:String,default:"Forum Bot"},
+		creator:{type:String,default:"forumBot"},
 		name:{type:String,required:true},
-		open:{type:String,default:true}
+		open:{type:String,default:true}	
 	});
-	Thread.methods.delete = function(threadId){
-
+	Thread.methods.getPosts = function(cb){
+		models.Post.find({threadId:this._id}).sort({'created_at':-1}).exec(cb);
 	};
+	Thread.methods.createPost = function(params,cb){
+		var post = new models.Post({
+			creator:params.creator||"forumBot",
+			threadId:this._id,
+			text:params.text,
+			likes:[],
+			flags:[]
+		});
+		post.save(cb);
+	};
+	Thread.methods.delete = function(cb){
+		var self = this;
+		models.Post.remove({threadId:this._id},function(err,res){
+			if(!err){
+				self.destroy(cb);
+			}
+			else{
+				cb(err);
+			}
+		});
+	};
+
+	var Post = db.Schema({
+		creator:{type:String,default:"forumBot"},
+		likes:Array,
+		flags:Array,
+		threadId:{type:String,required:true},
+		text:{type:String,min:1},
+		isReply:{type:Boolean,default:false}
+	});
 
 	models.register('Group',Group);
 	models.register('Thread',Thread);
+	models.register('Post',Post);
 };

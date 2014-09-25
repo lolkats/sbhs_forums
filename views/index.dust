@@ -1,4 +1,5 @@
 {> "layouts/default"/}
+{<title}Home{/title}
 {<body}
 <p>Hi there. The forums are coming. In the meantime, we are building the backend and getting it ready.</p>
 {/body}
